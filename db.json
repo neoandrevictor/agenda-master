@@ -1,5 +1,16 @@
 {
-    "agenda": [
-      { "id": 1, "nome": "andre", "email": "neoandrevictor@gmail.com" }
-    ]
-  }
+  "schedule": [
+    {
+      "name": "Andre",
+      "email": "neoandrevictor@gmail.com",
+      "phone": "11984159395",
+      "id": 2
+    },
+    {
+      "name": "Rick",
+      "email": "rick.regianni@gmail.com",
+      "phone": "11984123323",
+      "id": 3
+    }
+  ]
+}

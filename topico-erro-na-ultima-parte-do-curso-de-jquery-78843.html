@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Alura Typer</title>
+    <link rel="stylesheet" href="css/libs/materialize.min.css">
+    <link rel="stylesheet" href="css/libs/google-fonts.css">
+    <link rel="stylesheet" href="css/estilos.css">
+    <style>
+        #input-nome{
+    font-size: 20px;
+    width: 300px;
+    height: 26px;
+    border: solid 1px;
+    vertical-align: top;
+}
+
+.campo-digitacao{
+    font-size: 20px;
+    height: 160px;
+    border: solid;
+}
+
+.campo-desativado{
+    background-color: lightgray;
+}
+
+.frase{
+    font-size: 20px;
+    text-align: left 
+}
+
+.icones{
+vertical-align: middle;
+}
+
+.borda-verde{
+    border: 3px solid green
+}
+
+.borda-vermelha{
+    border: 3px solid red
+}
+.placar{
+    display: none;
+}
+
+body{
+    overflow: scroll;
+}
+    
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="center"> Alura Typer</h1>
+        <p class="frase center">Quem te vê passar assim por mim não sabe o que é sofrer ter que ver você, assim, sempre
+            tão linda contemplar o sol do teu olhar, perder você no ar, na certeza de um amor, me achar um nada, pois
+            sem ter teu carinho eu me sinto sozinho, eu me afogo em solidão
+            <ul class="informacoes center">
+                <li>
+                    <i class="small material-icons icones">description</i>
+                    <span id="tamanho-frase">30</span> palavras
+                </li>
+                <li>
+                    <i class="small material-icons icones">access_time</i>
+                    <span id="tempo-digitacao">2</span> segundos
+                </li>
+                <li>
+                    <i class="small material-icons icones">account_box</i>
+                    <input type="text" id="input-nome" />
+                </li>
+            </ul class="center">
+
+            <textarea name="" class="campo-digitacao" cols="40" rows="8"></textarea>
+
+            <div class="botoes">
+                <a class="btn-floating btn-large waves-effect waves-light red" id="botao-reiniciar">
+                    <i class="material-icons">restore</i>
+                </a>
+                <a class="btn-floating btn-large waves-effect waves-light green" id="botao-placar">
+                    <i class="material-icons">assignment</i>
+                </a>
+
+            </div>
+            <ul class="center">
+                <li><span class="contador-caracteres">0</span> caracteres</li>
+                <li><span class="contador-palavras">0</span> palavras</li>
+            </ul>
+            <section class="placar">
+                <h3>Placar</h3>
+                <table class="centered bordered">
+                    <thead>
+                        <tr>
+                            <th>Usuário</th>
+                            <th>No. de palavras</th>
+                            <th>Remover</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Thiago</td>
+                            <td>10</td>
+                            <td>
+                                <a href="#" class="botao-remover">
+                                    <i class="small material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script srch="js/main.js">$(() => {
+            inicializaContadores();
+            inicializaCronometro();
+            atualizaTamanhoFrase();
+            inicializaMarcadores();
+            $("#botao-reiniciar").click(reiniciaJogo);
+        })
+        // Variáveis =================================
+
+        const tempoInicial = $("#tempo-digitacao").text();
+        const campo = $(".campo-digitacao");
+
+        // Functions =================================
+
+        atualizaTamanhoFrase = () => {
+            let frase = $('.frase').text();
+            let numPalavras = frase.split(' ').length;
+            let tamanhoFrase = $("#tamanho-frase");
+            tamanhoFrase.text(numPalavras);
+        };
+
+        inicializaContadores = () => {
+            campo.on("input", () => {
+                const conteudo = campo.val();
+
+                const qtdPalavras = conteudo.split(/\S+/).length - 1;
+                $(".contador-palavras").text(qtdPalavras);
+
+                const qtdCaracteres = conteudo.length
+                $(".contador-caracteres").text(qtdCaracteres);
+            });
+        };
+
+        inicializaCronometro = () => {
+            let tempoRestante = $("#tempo-digitacao").text()
+            campo.one("focus", () => {
+                $("#botao-reiniciar").attr("disabled", true);
+                const cronometroID = setInterval(() => {
+                    tempoRestante--;
+                    $("#tempo-digitacao").text(tempoRestante);
+                    if (tempoRestante == 0) {
+                        campo.attr("disabled", true)
+                        clearInterval(cronometroID);
+                        $("#botao-reiniciar").attr("disabled", false);
+                        campo.toggleClass("campo-desativado")
+                        inserePlacar()
+                    }
+                }, 1000)
+            });
+        };
+
+        reiniciaJogo = () => {
+            campo.attr("disabled", false);
+            campo.val("");
+            $(".contador-palavras").text("0");
+            $(".contador-caracteres").text("0");
+            $("#tempo-digitacao").text(tempoInicial);
+            campo.toggleClass("campo-desativado")
+            campo.removeClass("borda-vermelha")
+            campo.removeClass("borda-verde")
+            inicializaCronometro();
+        };
+
+        inicializaMarcadores = () => {
+            let frase = $(".frase").text();
+            campo.on("input", () => {
+                let digitado = campo.val();
+                if (frase.startsWith(digitado)) {
+                    campo.addClass("borda-verde")
+                    campo.removeClass("borda-vermelha");
+                } else {
+                    campo.addClass("borda-vermelha");
+                    campo.removeClass("borda-verde");
+
+                }
+            })
+        };</script>
+    <script srch="js/placar.js">inserePlacar = () => {
+            let corpoTabela = $(".placar").find("tbody");
+            let usuario = $("#input-nome").val();
+            let numPalavras = $(".contador-palavras").text();
+            let linha = novaLinha(usuario, numPalavras); -
+                corpoTabela.prepend(linha);
+        };
+
+
+        $("tr").on("click", ".botao-remover", function (event) {
+            event.preventDefault();
+            $(this).parent().parent().remove()
+        })
+
+
+
+        novaLinha = (usuario, palavras) => {
+            let linha = $("<tr>");
+            let colunaUsuario = $("<td>").text(usuario);
+            let colunaPalavras = $("<td>").text(palavras);
+            let colunaRemover = $("<td>");
+
+            let link = $("<a>").attr("href", "#");
+            let icone = $("<i>").addClass("small").addClass("material-icons").text("delete");
+            // Icone dentro do <a>
+            link.append(icone);
+
+            // <a> dentro do <td>
+            colunaRemover.append(link);
+
+            // Os três <td> dentro do <tr>
+            linha.append(colunaUsuario);
+            linha.append(colunaPalavras);
+            linha.append(colunaRemover);
+
+            return linha;
+        }
+
+        mostraPlacar = () => {
+            $(".placar").stop().toggle()
+        };
+
+        $("#botao-placar").click(mostraPlacar);</script>
+
+
+</body>
+</html>

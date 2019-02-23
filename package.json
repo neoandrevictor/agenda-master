@@ -4,9 +4,9 @@
   "description": "curso caelum javascript construindo um webapp",
   "main": "agenda.js",
   "scripts": {
-    "front":"lite-server",
+    "front": "lite-server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "back":"json-server --watch db.json"
+    "back": "json-server --watch db.json"
   },
   "author": "",
   "license": "ISC",
