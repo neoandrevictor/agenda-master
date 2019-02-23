@@ -1,0 +1,16 @@
+{
+  "schedule": [
+    {
+      "name": "Andre",
+      "email": "andre@gmail.com",
+      "phone": "1231231231",
+      "id": 2
+    },
+    {
+      "name": "Jorge",
+      "email": "jorge.regianni@gmail.com",
+      "phone": "123123123123",
+      "id": 3
+    }
+  ]
+}
