@@ -88,3 +88,14 @@ function ajaxDelete(data){
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     request.send(data);
 }
+
+function ajaxGet(){
+
+    fetch('http://localhost:3000/agenda', {
+        method: 'GET',
+        headers: {'Content-Type':'application/x-www-form-urlencoded'}
+    })
+    .then(response => ajaxPega=response)
+
+}
+

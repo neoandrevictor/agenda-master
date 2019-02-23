@@ -1,0 +1,17 @@
+{
+  "name": "agenda-master",
+  "version": "1.0.0",
+  "description": "curso caelum javascript construindo um webapp",
+  "main": "agenda.js",
+  "scripts": {
+    "front":"lite-server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "back":"json-server --watch db.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^0.14.2",
+    "lite-server": "^2.4.0"
+  }
+}
